@@ -2,42 +2,37 @@
 # Normalizes phone numbers to a standard format
 import re
 
-def normalize_phone(phone_number):
-    """
-    Нормалізує телефонні номери до стандартного формату.
 
-    Args:
-        phone_number (str): Рядок з телефонним номером у будь-якому форматі.
+def normalize_phone(phone_number: str) -> str:
+    # Видаляємо всі зайві символи, залишаючи лише цифри та знак "+" на початку
+    phone_number = re.sub(r'[^\d+]', '', phone_number.strip())
 
-    Returns:
-        str: Нормалізований телефонний номер.
-    """
-
-    # Видаляємо всі символи, крім цифр та '+'
-    cleaned_number = re.sub(r'[^\d+]', '', phone_number)
-
-    # Перевіряємо, чи номер починається з '+'
-    if cleaned_number.startswith('+'):
-        # Якщо так, перевіряємо, чи є код країни
-        if cleaned_number.startswith('+380'):
-            return cleaned_number  # Номер вже в правильному форматі
+    # Якщо номер вже починається з "+", перевіряємо його коректність
+    if phone_number.startswith('+'):
+        if phone_number.startswith('+380'):
+            return phone_number  # Номер уже у вірному форматі
         else:
-            return '+38' + cleaned_number[1:]  # Додаємо код України
-    else:
-        # Якщо номер не починається з '+', додаємо код України
-        return '+38' + cleaned_number
+            return '+38' + phone_number[1:]  # Додаємо код України, якщо інший міжнародний код
 
-# Приклад використання функції
+    # Якщо номер починається з "380", просто додаємо знак "+" на початку
+    if phone_number.startswith('380'):
+        return '+' + phone_number
+
+    # Якщо номер не містить коду країни, додаємо "+38" на початок
+    return '+38' + phone_number
+
+
+# Приклад використання
 raw_numbers = [
     "067\t123 4567",
     "(095) 234-5678\n",
     "+380 44 123 4567",
     "380501234567",
-    "    +38(050)123-32-34",
-    "     0503451234",
+    " +38(050)123-32-34",
+    " 0503451234",
     "(050)8889900",
     "38050-111-22-22",
-    "38050 111 22 11   ",
+    "38050 111 22 11 ",
 ]
 
 sanitized_numbers = [normalize_phone(num) for num in raw_numbers]
