@@ -45,7 +45,7 @@ if __name__ == "__main__":
         directory_to_visualize = sys.argv[1]
         visualize_directory_structure(directory_to_visualize)
 
-# input - python main.py C:\DUBLES\YACHTING
+# input - python task_4_bot.py C:\DUBLES\YACHTING
 # output - Структура директорії: C:\DUBLES\YACHTING
 # ├── 29m_tender
 # │   ├── 29m_1 hull panels.pdf

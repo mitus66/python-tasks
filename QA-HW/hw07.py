@@ -62,7 +62,7 @@ feature-contact-form для створення форми зворотного �
 # If you made a mistake with the URL, an error message will pop up and you have a chance to correct your URL
 # When the Name and URL have been added, click on [OK]
 
-# Маємо основну гілку репозиторію: main. Сторюємо файл, наприклад main.py з командою print('Hello')
+# Маємо основну гілку репозиторію: main. Сторюємо файл, наприклад task_4_bot.py з командою print('Hello')
 # Ініціюємо git
 
 '''git init
