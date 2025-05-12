@@ -39,19 +39,22 @@ class Record:
 
     def remove_phone(self, phone):
         # Видаляє телефон зі списку телефонів запису.
-        for p in self.phones:
-            if p.value == phone:
-                self.phones.remove(p)
-                return
-        raise ValueError(f"Phone number {phone} not found")
+        p = self.find_phone(phone)
+        if p:
+            self.phones.remove(p)
+        else:
+            raise ValueError(f"Phone number {phone} not found")
 
     def edit_phone(self, old_phone, new_phone):
         # Редагує телефон у списку телефонів запису.
-        for p in self.phones:
-            if p.value == old_phone:
-                p.value = new_phone  # Оновлення значення об'єкта Phone
-                return
-        raise ValueError(f"Phone number {old_phone} not found")
+        p = self.find_phone(old_phone)
+        if p:
+            try:
+                p.value = Phone(new_phone).value # Валідація нового номера
+            except ValueError:
+                raise ValueError(f"Invalid new phone number {new_phone}")
+        else:
+            raise ValueError(f"Phone number {old_phone} not found")
 
     def find_phone(self, phone):
         # Шукає телефон у списку телефонів запису.
@@ -108,12 +111,23 @@ if __name__ == "__main__":
     john = book.find("John")
     john.edit_phone("1234567890", "1112223333")
 
-    print(john)  # Виведення: Contact name: John, phones: 1112223333; 5555555555
+    print(john)
 
     # Пошук конкретного телефону у записі John
     found_phone = john.find_phone("5555555555")
-    print(f"{john.name}: {found_phone}")  # Виведення: John: 5555555555
+    print(f"{john.name}: {found_phone}")
 
     # Видалення запису Jane
     book.delete("Jane")
     print(book)
+
+    # Додаткові тести
+    try:
+        john.edit_phone("1112223333", "invalid_phone")  # Виклик помилки валідації
+    except ValueError as e:
+        print(e)
+
+    try:
+        john.remove_phone("non_existent_phone")
+    except ValueError as e:
+        print(e)
