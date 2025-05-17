@@ -180,8 +180,6 @@ def input_error(func):
 
 @input_error
 def add_contact(args, book: AddressBook):
-    if len(args) < 2:
-        raise IndexError
     name, phone, *_ = args
     record = book.find(name)
     message = "Contact updated."
@@ -195,8 +193,6 @@ def add_contact(args, book: AddressBook):
 
 @input_error
 def change_contact(args, book: AddressBook):
-    if len(args) != 3:
-        raise IndexError
     name, old_phone, new_phone = args
     record = book.find(name)
     if record:
@@ -207,8 +203,6 @@ def change_contact(args, book: AddressBook):
 
 @input_error
 def show_phone(args, book: AddressBook):
-    if len(args) != 1:
-        raise IndexError
     name = args[0]
     record = book.find(name)
     if record:
@@ -225,8 +219,6 @@ def show_all(book: AddressBook):
 
 @input_error
 def add_birthday(args, book: AddressBook):
-    if len(args) != 2:
-        raise IndexError
     name, birthday = args
     record = book.find(name)
     if record:
@@ -237,8 +229,6 @@ def add_birthday(args, book: AddressBook):
 
 @input_error
 def show_birthday(args, book: AddressBook):
-    if len(args) != 1:
-        raise IndexError
     name = args[0]
     record = book.find(name)
     if record:
